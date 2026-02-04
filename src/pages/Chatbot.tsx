@@ -29,10 +29,12 @@ export const Chatbot = () => {
     e.preventDefault();
     if (!input.trim() || isTyping) return;
 
+    const userText = input; // capture current input before clearing
+
     const userMsg: ChatMessage = {
       id: Date.now().toString(),
       role: 'user',
-      content: input,
+      content: userText,
       timestamp: new Date(),
     };
 
@@ -42,7 +44,7 @@ export const Chatbot = () => {
 
     // Simulate AI logic
     setTimeout(() => {
-      const responseContent = generateSupportResponse(input);
+      const responseContent = generateSupportResponse(userText);
       const assistantMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
@@ -81,7 +83,7 @@ export const Chatbot = () => {
               <Bot className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h3 className="font-bold text-white text-sm">MindCare Buddy</h3>
+              <h3 className="font-bold text-white text-sm">CareMind Buddy</h3>
               <div className="flex items-center gap-1.5">
                 <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">AI Support Active</span>
@@ -166,7 +168,7 @@ export const Chatbot = () => {
           </form>
           <div className="mt-2 flex items-center justify-center gap-2">
             <Sparkles className="h-3 w-3 text-indigo-400" />
-            <p className="text-[10px] text-slate-500 font-medium">Powered by MindCare NLP & Safety Triggers</p>
+            <p className="text-[10px] text-slate-500 font-medium">Powered by CareMind NLP & Safety Triggers</p>
           </div>
         </div>
       </div>
