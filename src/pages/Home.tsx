@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Brain, Heart, Shield, Sparkles, ArrowRight, MessageCircle, Activity } from 'lucide-react';
+import { Brain, Shield, Sparkles, ArrowRight, MessageCircle, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const Home = () => {

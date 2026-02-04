@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Brain, Sparkles, Send, ShieldCheck, Info } from 'lucide-react';
+import { Brain, Sparkles, ShieldCheck, Info } from 'lucide-react';
 import { analyzeText } from '@/lib/mockAI';
 import { AssessmentResult } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';

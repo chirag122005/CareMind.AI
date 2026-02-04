@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { 
   Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer,
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
-  BarChart, Bar, Legend
+  BarChart, Bar
 } from 'recharts';
-import { AlertCircle, ArrowRight, Brain, Heart, ShieldAlert, Sparkles, Wind } from 'lucide-react';
+import { ArrowRight, Brain, Heart, ShieldAlert, Sparkles, Wind } from 'lucide-react';
 import { AssessmentResult } from '@/types';
 import { Link } from 'react-router-dom';
 

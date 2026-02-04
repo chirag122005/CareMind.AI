@@ -1,6 +1,5 @@
-import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Brain, LayoutDashboard, MessageSquare, Wind, Info, Heart } from 'lucide-react';
+import { Brain, LayoutDashboard, MessageSquare, Wind, Heart } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
 export const Header = () => {
