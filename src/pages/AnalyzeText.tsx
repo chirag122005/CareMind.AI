@@ -131,7 +131,7 @@ export const AnalyzeText = () => {
                 "{result.explanation}"
               </div>
               <p className="text-xs text-slate-500">
-                Models used: DistilBERT, Sentiment Analysis (Heuristic Mapping), and Emotion Classification.
+                Models used: Sentiment Analysis (Heuristic Mapping), and Emotion Classification.
               </p>
             </div>
           </motion.div>

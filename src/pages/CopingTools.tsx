@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Wind, ShieldCheck, Heart, Coffee, Book, Phone } from 'lucide-react';
 
 const HELPLINES = [
-  { name: 'AASRA', number: '91-22-27546669', desc: '24/7 Suicide Prevention' },
-  { name: 'Kiran', number: '1800-599-0019', desc: 'Mental Health Rehabilitation' },
-  { name: 'Vandrevala Foundation', number: '1860-266-2345', desc: 'Emotional Support' },
+  { name: 'CHIRAG', number: '+91 79880 74084', desc: 'Immediate help during emotional breakdowns and crisis moments' },
+  { name: 'CHETAN', number: '+91 70271 56438', desc: 'Helps rebuild mental strength step by step' },
+  { name: 'AARZU', number: '+91 79862 62510', desc: 'Someone who listens when you just need to talk' },
 ];
 
 const COPING_STRATEGIES = [

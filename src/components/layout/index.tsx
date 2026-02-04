@@ -19,7 +19,7 @@ export const Header = () => {
           <div className="rounded-lg bg-indigo-600 p-1.5 transition-transform group-hover:scale-110">
             <Heart className="h-5 w-5 text-white" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">MindCare AI</span>
+          <span className="text-xl font-bold tracking-tight text-white">CareMind.AI</span>
         </Link>
         
         <nav className="hidden md:flex items-center gap-6">
@@ -56,7 +56,7 @@ export const Footer = () => {
     <footer className="mt-20 border-t border-slate-800 bg-slate-950 px-4 py-12">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
-          <h3 className="text-lg font-bold text-white mb-2">MindCare AI</h3>
+          <h3 className="text-lg font-bold text-white mb-2">CareMind.AI</h3>
           <p className="text-slate-400 text-sm max-w-md">
             An AI-powered mental health awareness platform for early detection and supportive care. 
             Not a medical diagnostic tool.
@@ -68,13 +68,13 @@ export const Footer = () => {
           <div className="space-y-3">
             <a href="mailto:developer@example.com" className="flex items-center gap-3 text-slate-300 hover:text-white transition-colors">
               <span className="w-8 h-8 flex items-center justify-center bg-slate-800 rounded-lg text-xs">📧</span>
-              <span>developer@example.com</span>
+              <span>chiragsaini157@gmail.com</span>
             </a>
-            <a href="https://linkedin.com/in/username" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-slate-300 hover:text-white transition-colors">
+            <a href="https://www.linkedin.com/in/chirag-saini-783892329 " target="_blank" rel="noreferrer" className="flex items-center gap-3 text-slate-300 hover:text-white transition-colors">
               <span className="w-8 h-8 flex items-center justify-center bg-slate-800 rounded-lg text-xs">💼</span>
               <span>LinkedIn / Professional Profile</span>
             </a>
-            <a href="https://github.com/username" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-slate-300 hover:text-white transition-colors">
+            <a href="https://github.com/chirag122005" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-slate-300 hover:text-white transition-colors">
               <span className="w-8 h-8 flex items-center justify-center bg-slate-800 rounded-lg text-xs">🧑‍💻</span>
               <span>GitHub / Project Source</span>
             </a>
@@ -82,7 +82,7 @@ export const Footer = () => {
         </div>
       </div>
       <div className="mt-12 text-center text-slate-500 text-xs">
-        &copy; {new Date().getFullYear()} MindCare AI Project. Created for Academic Purposes.
+        &copy; {new Date().getFullYear()} CareMind.AI Project. Created for Academic Purposes.
       </div>
     </footer>
   );
