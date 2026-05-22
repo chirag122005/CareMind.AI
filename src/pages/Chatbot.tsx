@@ -393,14 +393,6 @@ export const Chatbot = () => {
     }
 
     if (
-      t.includes("scared of future") ||
-      t.includes("fear future") ||
-      t.includes("future anxiety")
-    ) {
-      return "The unknown can feel intimidating, but you don't have to solve your entire future today.";
-    }
-
-    if (
       t.includes("need help") ||
       t.includes("help me") ||
       t.includes("support")
