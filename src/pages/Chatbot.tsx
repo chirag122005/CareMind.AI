@@ -8,7 +8,7 @@ const INITIAL_MESSAGE: ChatMessage = {
   id: "1",
   role: "assistant",
   content:
-    "Hi there! I'm your MindCare Buddy. I'm here to listen and offer supportive coping strategies. How are you feeling today?",
+    "Hello, I am your Friend. I'm here to listen and offer supportive coping strategies. How are you feeling today?",
   timestamp: new Date(),
 };
 
@@ -407,7 +407,7 @@ export const Chatbot = () => {
     ) {
       return "Healing isn't always linear, but every small step forward still matters.";
     }
-    return "I feel bad for your concern, can you try explaining me gain in a better way possible";
+    return "I feel bad for your concern, can you try explaining me again in a better way possible";
   };
 
   return (
