@@ -67,7 +67,7 @@ export const CopingTools = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl space-y-12">
       <div className="text-center space-y-4">
-        <h2 className="text-3xl font-black text-white">Coping Strategies & Tools 🌱</h2>
+        <h2 className="text-3xl font-black text-white">Coping Strategies, Tools and More🌱</h2>
         <p className="text-slate-400 max-w-2xl mx-auto">
           These tools are designed to help you manage immediate stress and anxiety. 
           Remember, taking a moment for yourself is a sign of strength.
