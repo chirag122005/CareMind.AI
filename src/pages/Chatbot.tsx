@@ -68,7 +68,7 @@ export const Chatbot = () => {
     if (t.includes('die') || t.includes('suicide') || t.includes('hurt')) {
       return "I'm very concerned about what you're saying. You don't have to carry this alone. Please reach out to a professional or a helpline. In India, you can call AASRA at 91-22-27546669 or Kiran at 1800-599-0019. They are available to help you right now.";
     }
-    return "Thank you for sharing that with me. I'm here to support you. How does that make you feel overall, and what do you think would help you feel even a little bit better right now?";
+   
   };
 
   return (
