@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Bot, User, Sparkles, ShieldAlert, Trash2 } from 'lucide-react';
 import { ChatMessage } from '@/types';
@@ -63,7 +63,7 @@ export const Chatbot = () => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const handleSend = async (e: React.FormEvent) => {
+  const handleSend = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!input.trim() || isTyping) return;
 
