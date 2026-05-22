@@ -415,7 +415,7 @@ export const Chatbot = () => {
     ) {
       return "Healing isn't always linear, but every small step forward still matters.";
     }
-    return "The unknown can feel intimidating, but you don't have to solve your entire future today.";
+    return "I feel bad for your concern, can you try explaining me gain in a better way possible";
   };
 
   return (
