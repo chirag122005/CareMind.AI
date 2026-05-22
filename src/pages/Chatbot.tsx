@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Bot, User, Sparkles, ShieldAlert } from 'lucide-react';
+import { Send, Bot, User, Sparkles, ShieldAlert, Trash2 } from 'lucide-react';
 import { ChatMessage } from '@/types';
 import { cn } from '@/utils/cn';
 
@@ -10,6 +10,9 @@ const INITIAL_MESSAGE: ChatMessage = {
   content: "Hi there! I'm your MindCare Buddy. I'm here to listen and offer supportive coping strategies. How are you feeling today?",
   timestamp: new Date(),
 };
+
+// API Backend Base URL
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export const Chatbot = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([INITIAL_MESSAGE]);
@@ -21,6 +24,41 @@ export const Chatbot = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Fetch session user id
+  const getUserId = () => {
+    let userId = localStorage.getItem('caremind_user_id');
+    if (!userId) {
+      userId = 'user_' + Math.random().toString(36).substring(2, 11);
+      localStorage.setItem('caremind_user_id', userId);
+    }
+    return userId;
+  };
+
+  // Load chat history on mount
+  useEffect(() => {
+    const loadHistory = async () => {
+      const userId = getUserId();
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/history/${userId}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) {
+            const mapped: ChatMessage[] = data.map((msg: any) => ({
+              id: msg.id,
+              role: msg.role,
+              content: msg.content,
+              timestamp: new Date(msg.timestamp)
+            }));
+            setMessages(mapped);
+          }
+        }
+      } catch (err) {
+        console.warn("Could not retrieve conversation history from server. Operating in offline/local mode.", err);
+      }
+    };
+    loadHistory();
+  }, []);
+
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping]);
@@ -29,7 +67,8 @@ export const Chatbot = () => {
     e.preventDefault();
     if (!input.trim() || isTyping) return;
 
-    const userText = input; // capture current input before clearing
+    const userText = input;
+    const userId = getUserId();
 
     const userMsg: ChatMessage = {
       id: Date.now().toString(),
@@ -42,18 +81,81 @@ export const Chatbot = () => {
     setInput('');
     setIsTyping(true);
 
-    // Simulate AI logic
-    setTimeout(() => {
-      const responseContent = generateSupportResponse(userText);
+    try {
+      // Connect to the new Express backend API
+      const res = await fetch(`${BACKEND_URL}/api/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId, message: userText })
+      });
+
+      if (!res.ok) {
+        throw new Error("Server responded with error");
+      }
+
+      const data = await res.json();
+      
       const assistantMsg: ChatMessage = {
-        id: (Date.now() + 1).toString(),
+        id: data.id || (Date.now() + 1).toString(),
         role: 'assistant',
-        content: responseContent,
-        timestamp: new Date(),
+        content: data.content,
+        timestamp: data.timestamp ? new Date(data.timestamp) : new Date(),
       };
+      
       setMessages(prev => [...prev, assistantMsg]);
+    } catch (error) {
+      console.warn("Backend server connection failed. Running offline fallback.", error);
+      
+      // Fallback: use client-side rules if backend is unreachable
+      setTimeout(() => {
+        const responseContent = generateSupportResponse(userText);
+        const assistantMsg: ChatMessage = {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: responseContent + " (Offline Fallback)",
+          timestamp: new Date(),
+        };
+        setMessages(prev => [...prev, assistantMsg]);
+      }, 1200);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
+  };
+
+  // Reset assistant memory
+  const handleClearMemory = async () => {
+    const userId = getUserId();
+    if (window.confirm("Are you sure you want to reset your CareMind Buddy's memory of your name, triggers, and preferences? This will clear its learning database for you.")) {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/facts/${userId}`, {
+          method: 'DELETE'
+        });
+        if (res.ok) {
+          alert("Buddy memory cleared successfully!");
+        } else {
+          throw new Error();
+        }
+      } catch (err) {
+        alert("Failed to reset memory. Backend server appears to be offline.");
+      }
+    }
+  };
+
+  // Clear chat logs
+  const handleClearHistory = async () => {
+    const userId = getUserId();
+    if (window.confirm("Are you sure you want to clear your local chat history?")) {
+      setMessages([INITIAL_MESSAGE]);
+      try {
+        await fetch(`${BACKEND_URL}/api/history/${userId}`, {
+          method: 'DELETE'
+        });
+      } catch (err) {
+        console.warn("Could not delete history from server:", err);
+      }
+    }
   };
 
   const generateSupportResponse = (text: string) => {
@@ -90,9 +192,26 @@ export const Chatbot = () => {
               </div>
             </div>
           </div>
-          <div className="hidden sm:flex items-center gap-2 bg-slate-800/50 px-3 py-1.5 rounded-lg border border-slate-700">
-            <ShieldAlert className="h-3.5 w-3.5 text-amber-500" />
-            <span className="text-[10px] text-slate-300 font-medium italic">Supportive, not medical</span>
+          
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleClearMemory}
+              className="text-[10px] text-slate-400 hover:text-indigo-400 hover:border-indigo-500 bg-slate-800/40 px-3 py-1.5 rounded-lg border border-slate-700/80 transition-all font-medium"
+              title="Reset AI learned facts about you"
+            >
+              Clear Brain
+            </button>
+            <button
+              onClick={handleClearHistory}
+              className="text-[10px] text-slate-400 hover:text-rose-400 hover:border-rose-500 bg-slate-800/40 px-2.5 py-1.5 rounded-lg border border-slate-700/80 transition-all"
+              title="Clear chat screen"
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+            </button>
+            <div className="hidden sm:flex items-center gap-2 bg-slate-800/50 px-3 py-1.5 rounded-lg border border-slate-700">
+              <ShieldAlert className="h-3.5 w-3.5 text-amber-500" />
+              <span className="text-[10px] text-slate-300 font-medium italic">Supportive, not medical</span>
+            </div>
           </div>
         </div>
 
@@ -168,7 +287,7 @@ export const Chatbot = () => {
           </form>
           <div className="mt-2 flex items-center justify-center gap-2">
             <Sparkles className="h-3 w-3 text-indigo-400" />
-            <p className="text-[10px] text-slate-500 font-medium">Powered by CareMind NLP & Safety Triggers</p>
+            <p className="text-[10px] text-slate-500 font-medium">Powered by CareMind Adaptive Buddy Backend</p>
           </div>
         </div>
       </div>
